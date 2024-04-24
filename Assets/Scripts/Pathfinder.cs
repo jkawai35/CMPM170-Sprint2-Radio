@@ -2,21 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using Utils;
 //Used https://www.redblobgames.com/pathfinding/a-star/introduction.html as a tutorial
-public class Pathfinder : MonoBehaviour
+public class Pathfinder
 {
-    public static Pathfinder _instance;
-    public static Pathfinder Instance {get{return _instance;}}
-    private void Awake(){
-        if (_instance != null && _instance != this){
-            Destroy(this.gameObject);
-        }
-        else{
-            _instance =  this;
-        }
-    }
-
     Node start;
     Node end;
 
@@ -49,7 +39,7 @@ public class Pathfinder : MonoBehaviour
             if (current == end){
                 break;
             }
-            foreach (Node next in current.GetEdges()){
+            foreach (Node next in current.edges){
                 float newCost = costSoFar[current] + next.cost;
                 if(!costSoFar.ContainsKey(next)||newCost<costSoFar[next]){
                     costSoFar[next] = newCost;
@@ -63,8 +53,8 @@ public class Pathfinder : MonoBehaviour
     }
 
     float CalculateHeuristic(Node a, Node b){
-        Vector3 aPos = a.transform.position;
-        Vector3 bPos = b.transform.position;
+        Vector3 aPos = a.pos;
+        Vector3 bPos = b.pos;
         return Mathf.Abs(aPos.x-bPos.x)+Mathf.Abs(aPos.y-bPos.y);
     }
 
@@ -89,7 +79,7 @@ public class Pathfinder : MonoBehaviour
         }
         nodeList.Reverse();
         foreach (Node node in nodeList){
-            Debug.Log(node);
+            Debug.Log(node.pos);
         }
     }
 }

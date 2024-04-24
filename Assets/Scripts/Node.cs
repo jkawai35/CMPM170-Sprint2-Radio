@@ -3,14 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node : MonoBehaviour
+public class Node
 {
     //cost on node instead of edge
     public float cost;
-    public List<Node> edges;
+    public List<Node> edges = new List<Node>();
 
-    public List<Node> GetEdges(){
-        return edges;
+    public Vector3Int pos;
+
+    public Node(float nodeCost, Vector3Int nodePos){
+        cost = nodeCost;
+        pos = nodePos;
     }
 
 }
