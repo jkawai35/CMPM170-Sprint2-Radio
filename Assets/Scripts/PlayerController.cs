@@ -36,7 +36,10 @@ public class PlayerController : MonoBehaviour
             movement.Normalize();
 
             rb.velocity = new Vector2(movement.x * speed, movement.y * speed);
-            
+
+
+
+
             Vector2 moveDirection = rb.velocity;
             if (moveDirection != Vector2.zero) {
                 float angle = Mathf.Atan2(moveDirection.x, -moveDirection.y) * Mathf.Rad2Deg;
@@ -44,6 +47,7 @@ public class PlayerController : MonoBehaviour
                 animator.SetFloat("moveX", x);
                 animator.SetFloat("moveY", y);
                 isMoving = true;
+
             }
 
             animator.SetBool("isMoving", isMoving);
