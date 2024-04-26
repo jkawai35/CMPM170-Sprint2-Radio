@@ -2,20 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] float speed;
-    [SerializeField] private Transform lightTransform; // Reference to the light object's Transform
-
     Rigidbody2D rb;
-    Animator animator;
+    private Animator animator;
     bool isMoving;
+        [SerializeField] float speed;
 
-    
+    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        lightTransform = GameObject.Find("Light 2D").transform;
+        
     }
 
     private void Awake()
@@ -23,13 +21,10 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    
+
+    // Update is called once per frame
     void Update()
     {
-        PlayerMovement();
-    }
-
-    void PlayerMovement(){
         if (!isMoving)
         {
             float x = Input.GetAxisRaw("Horizontal");
@@ -42,8 +37,6 @@ public class PlayerController : MonoBehaviour
 
             Vector2 moveDirection = rb.velocity;
             if (moveDirection != Vector2.zero) {
-                float angle = Mathf.Atan2(moveDirection.x, -moveDirection.y) * Mathf.Rad2Deg;
-                lightTransform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 animator.SetFloat("moveX", x);
                 animator.SetFloat("moveY", y);
                 isMoving = true;
