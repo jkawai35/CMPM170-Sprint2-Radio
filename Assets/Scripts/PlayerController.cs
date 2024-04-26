@@ -26,5 +26,11 @@ public class PlayerController : MonoBehaviour
         movement.Normalize();
 
         rb.velocity = new Vector2(movement.x * speed, movement.y * speed);
+        
+        Vector2 moveDirection = rb.velocity;
+        if (moveDirection != Vector2.zero) {
+        	float angle = Mathf.Atan2(moveDirection.x, -moveDirection.y) * Mathf.Rad2Deg;
+        	transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }
     }
 }
