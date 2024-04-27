@@ -38,6 +38,22 @@ public class Graph {
     public void removeEdge(int a, int b) {
         adjacencyMatrix.clearAdjacency(a, b);
     }
+    public bool hasEdge(int a, int b) {
+        return adjacencyMatrix.hasAdjacency(a, b);
+    }
+    public Vector2Int[] getEdges() {
+        float[,] adjMat = getAdjacencyMatrixArray();
+        List<Vector2Int> edges = new List<Vector2Int>();
+        for(int j = 0; j < adjMat.GetLength(1); j++) {
+            for(int i = 0; i < adjMat.GetLength(0); i++) {
+                if(i <= j) continue;
+                if(adjMat[i, j] > 0) {
+                    edges.Add(new Vector2Int(i, j));
+                }
+            }
+        }
+        return edges.ToArray();
+    }
 
     public Vector2[] getVertices() {
         return vertices.ToArray();
@@ -79,6 +95,9 @@ public class AdjacencyMatrix {
     }
     public void clearAdjacency(int a, int b) {
         matrix[a][b] = matrix[b][a] = -1f;
+    }
+    public bool hasAdjacency(int a, int b) {
+        return matrix[a][b] > 0;
     }
     public float[,] ToArray() {
         float[,] array = new float[numVerts, numVerts];
