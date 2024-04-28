@@ -41,14 +41,14 @@ public class Graph {
     public bool hasEdge(int a, int b) {
         return adjacencyMatrix.hasAdjacency(a, b);
     }
-    public Vector2Int[] getEdges() {
+    public (int, int)[] getEdges() {
         float[,] adjMat = getAdjacencyMatrixArray();
-        List<Vector2Int> edges = new List<Vector2Int>();
+        List<(int, int)> edges = new List<(int, int)>();
         for(int j = 0; j < adjMat.GetLength(1); j++) {
             for(int i = 0; i < adjMat.GetLength(0); i++) {
                 if(i <= j) continue;
                 if(adjMat[i, j] > 0) {
-                    edges.Add(new Vector2Int(i, j));
+                    edges.Add((i, j));
                 }
             }
         }

@@ -123,6 +123,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &435217231
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 435217232}
+  m_Layer: 0
+  m_Name: End
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &435217232
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435217231}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 47.8, y: 51.6, z: -0.0012402576}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &590507279
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,6 +291,11 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!1 &890803401 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1693756375444246672, guid: 0577f9146ca2d9ac9a0f1c71df318e3e, type: 3}
+  m_PrefabInstance: {fileID: 1533216473}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1528320586
 GameObject:
   m_ObjectHideFlags: 0
@@ -542,8 +578,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkable: {fileID: 1925990663}
-  player: {fileID: 0}
-  end: {fileID: 0}
+  player: {fileID: 890803401}
+  end: {fileID: 435217231}
   debugMode: 0
   highlight: {fileID: 11400000, guid: 4f9402b51e502cb4b828283834a9f8ba, type: 2}
   normal: {fileID: 11400000, guid: 7f9d162e4ed605a468b832ea95b3c3e2, type: 2}
@@ -579,6 +615,7 @@ MonoBehaviour:
   dungeonWidth: 100
   dungeonHeight: 100
   numRooms: 10
+  seed: 24373
   tileset:
   - {fileID: 0}
   - {fileID: 11400000, guid: c5138f25c104a594a9899b0268efd59a, type: 2}
@@ -740,3 +777,4 @@ SceneRoots:
   - {fileID: 590507282}
   - {fileID: 1544528489}
   - {fileID: 1533216473}
+  - {fileID: 435217232}

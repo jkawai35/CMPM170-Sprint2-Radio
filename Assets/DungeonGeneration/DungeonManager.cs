@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class DungeonManager : MonoBehaviour
 {
-    public int dungeonWidth, dungeonHeight, numRooms;
+    public int dungeonWidth, dungeonHeight, numRooms, seed;
     public Tile[] tileset;
     public Texture2D[] roomTemplates;
 
@@ -23,11 +23,12 @@ public class DungeonManager : MonoBehaviour
                 break;
             }
         }
-        dungeonResult = DungeonGenerator.GenerateDungeon(dungeonWidth, dungeonHeight, numRooms, roomTemplates);
+        dungeonResult = DungeonGenerator.GenerateDungeon(dungeonWidth, dungeonHeight, numRooms, roomTemplates, seed);
         ApplyDungeon(dungeonResult.dungeon);
     }
 
     void Update() {
+        dungeonResult = DungeonGenerator.GenerateDungeon(dungeonWidth, dungeonHeight, numRooms, roomTemplates, seed);
         Vector2[] vertices = dungeonResult.delauney.getVertices();
         float[,] adjArray = dungeonResult.delauney.getAdjacencyMatrixArray();
         Vector2 offset = new Vector2(-dungeonWidth/2, -dungeonHeight/2);

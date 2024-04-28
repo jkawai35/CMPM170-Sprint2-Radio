@@ -11,11 +11,12 @@ public class DungeonGenerator {
 
     private const int maxRoomIterations = 20;
 
-    public static DungeonResult GenerateDungeon(int width, int height, int numRooms, Texture2D[] roomTemplates) {
+    public static DungeonResult GenerateDungeon(int width, int height, int numRooms, Texture2D[] roomTemplates, int seed) {
         int[,] dungeon = new int[width, height];
         List<RectInt> roomsBounds = new List<RectInt>();
         int i = 0;
         int roomIterations = 0;
+        Random.InitState(seed);
         while(i < numRooms) {
             if(addRoom(new DungeonData(ref dungeon, roomTemplates, ref roomsBounds))) {
                 i++;
@@ -52,7 +53,6 @@ public class DungeonGenerator {
             }
         }
         if(valid) {
-            Debug.Log("New Room");
             dungeonData.roomsBounds.Add(roomBounds);
             for(int y = 0 ; y < roomHeight; y++) {
                 for(int x = 0 ; x < roomWidth; x++) {
