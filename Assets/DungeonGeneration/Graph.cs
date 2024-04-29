@@ -62,6 +62,35 @@ public class Graph {
         return adjacencyMatrix.ToArray();
     }
 
+    public Graph getMST() {
+        Graph mst = new Graph(getVertices());
+        bool[] visited = new bool[mst.getVertices().Length];
+        visited[0] = true;
+        for(int visitedCount = 1; visitedCount < visited.Length; visitedCount++) {
+            (int, int) nextEdge = getNextEdge(visited);
+            mst.addEdge(nextEdge.Item1, nextEdge.Item2);
+            visited[nextEdge.Item1] = true;
+            visited[nextEdge.Item2] = true;
+        }
+        return mst;
+    }
+    private (int, int) getNextEdge(bool[] visited) {
+        float[,] adj = getAdjacencyMatrixArray();
+        (int, int) shortestEdge = (0, 0);
+        float shortestDistance = int.MaxValue;
+        for(int y = 0; y < adj.GetLength(1); y++) {
+            for(int x = 0; x < adj.GetLength(1); x++) {
+                if(x<=y) continue;
+                float adjacency = adj[x, y];
+                if(!visited[x] ^ !visited[y] && adjacency > 0 && adjacency < shortestDistance) {
+                    shortestDistance = adjacency;
+                    shortestEdge = (x, y);
+                }
+            }
+        }
+        return shortestEdge;
+    }
+
 }
 
 public class AdjacencyMatrix {

@@ -5,9 +5,10 @@ using UnityEngine.Tilemaps;
 
 public class DungeonManager : MonoBehaviour
 {
-    public int dungeonWidth, dungeonHeight, numRooms, seed;
+    public int dungeonWidth, dungeonHeight, numRooms, numNonMSTEdges, seed;
     public Tile[] tileset;
     public Texture2D[] roomTemplates;
+    public GameObject doorPrefab;
 
     private Tilemap walkableTilemap, wallTilemap;
     private DungeonResult dungeonResult;
@@ -23,14 +24,13 @@ public class DungeonManager : MonoBehaviour
                 break;
             }
         }
-        dungeonResult = DungeonGenerator.GenerateDungeon(dungeonWidth, dungeonHeight, numRooms, roomTemplates, seed);
-        ApplyDungeon(dungeonResult.dungeon);
+        dungeonResult = DungeonGenerator.GenerateDungeon(dungeonWidth, dungeonHeight, numRooms, roomTemplates, numNonMSTEdges, seed);
+        ApplyDungeon(dungeonResult);
     }
 
     void Update() {
-        dungeonResult = DungeonGenerator.GenerateDungeon(dungeonWidth, dungeonHeight, numRooms, roomTemplates, seed);
-        Vector2[] vertices = dungeonResult.delauney.getVertices();
-        float[,] adjArray = dungeonResult.delauney.getAdjacencyMatrixArray();
+        Vector2[] vertices = dungeonResult.connections.getVertices();
+        float[,] adjArray = dungeonResult.connections.getAdjacencyMatrixArray();
         Vector2 offset = new Vector2(-dungeonWidth/2, -dungeonHeight/2);
         for(int y = 0; y < adjArray.GetLength(1); y++) {
             for(int x = 0; x < adjArray.GetLength(0); x++) {
@@ -42,7 +42,8 @@ public class DungeonManager : MonoBehaviour
         }
     }
 
-    private void ApplyDungeon(int[,] dungeon) {
+    private void ApplyDungeon(DungeonResult dungeonResult) {
+        int[,] dungeon = dungeonResult.dungeon;
         int width = dungeon.GetLength(0);
         int height = dungeon.GetLength(1);
         List<Vector3Int> wallPositions = new List<Vector3Int>();
@@ -63,6 +64,15 @@ public class DungeonManager : MonoBehaviour
                     walkablePositions.Add(position);
                     walkableTiles.Add(tile);
                 }
+            }
+        }
+        foreach(Room room in dungeonResult.rooms) {
+            foreach(Door door in room.doors) {
+                Quaternion rotation = Quaternion.identity;
+                if(door.vertical) {
+                    rotation = Quaternion.Euler(0f, 0f, 90f);
+                }
+                Instantiate(doorPrefab, door.position-new Vector2(width/2, height/2), rotation);
             }
         }
         wallTilemap.SetTiles(wallPositions.ToArray(), wallTiles.ToArray());

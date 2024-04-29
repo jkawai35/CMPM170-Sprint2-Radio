@@ -612,9 +612,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94659c23f4ca65ac6ba8f39df25a6563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dungeonWidth: 100
-  dungeonHeight: 100
-  numRooms: 10
+  dungeonWidth: 250
+  dungeonHeight: 250
+  numRooms: 250
+  numNonMSTEdges: 35
   seed: 24373
   tileset:
   - {fileID: 0}
@@ -624,6 +625,7 @@ MonoBehaviour:
   roomTemplates:
   - {fileID: 2800000, guid: c67f4c6685a50d1b6b7bdf52fe068922, type: 3}
   - {fileID: 2800000, guid: 74c86a361f8179052915b189625c5697, type: 3}
+  doorPrefab: {fileID: 1003535439467939883, guid: 3586b33c00fc6f9c99fb9843b2dc7dd8, type: 3}
 --- !u!1 &1925990662
 GameObject:
   m_ObjectHideFlags: 0
