@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        lightTransform = GameObject.Find("Light 2D").transform;
     }
 
     private void Awake()
@@ -26,7 +25,18 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-        PlayerMovement();
+        Radio.Instance.currentState = Input.GetKey(KeyCode.Space) ? Radio.RadioState.isCharging : Radio.RadioState.isOn;
+        
+        switch(Radio.Instance.currentState){
+            case Radio.RadioState.isCharging:
+            break;
+            case Radio.RadioState.isOn:
+                PlayerMovement();
+            break;
+            case Radio.RadioState.isOff:
+                PlayerMovement();
+            break;
+        }
     }
 
     void PlayerMovement(){

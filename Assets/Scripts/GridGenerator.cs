@@ -64,15 +64,19 @@ public class GridGenerator : MonoBehaviour
             Vector3Int direction = currentPath[1].pos-currentPath[0].pos;
             if(direction==Vector3Int.up){
                 Debug.Log("move up");
+                Radio.Instance.RadioDirection(0);
             }
             else if(direction==Vector3Int.down){
                 Debug.Log("move down");
+                Radio.Instance.RadioDirection(1);
             }
             else if(direction==Vector3Int.left){
                 Debug.Log("move left");
+                Radio.Instance.RadioDirection(2);
             }
             else if(direction==Vector3Int.right){
                 Debug.Log("move right");
+                Radio.Instance.RadioDirection(3);
             }
 
             yield return new WaitForSeconds(delay);
