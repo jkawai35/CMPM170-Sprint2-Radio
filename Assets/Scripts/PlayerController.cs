@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -64,4 +66,18 @@ public class PlayerController : MonoBehaviour
         }
         isMoving = false;
     }
+
+        void OnCollisionEnter2D(Collision2D collision) 
+    { 
+        if (collision.gameObject.CompareTag("Monster")) 
+        { 
+            Debug.Log("End Game - Monster");
+            SceneManager.LoadScene("EndScene");
+        } 
+        if (collision.gameObject.CompareTag("Goal")) 
+        { 
+            Debug.Log("End Game - Goal");
+            SceneManager.LoadScene("EndScene");
+        } 
+    } 
 }

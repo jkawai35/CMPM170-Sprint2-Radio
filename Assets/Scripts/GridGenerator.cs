@@ -128,5 +128,4 @@ public class GridGenerator : MonoBehaviour
             n.edges.Add(nodes[rightPos]);
         }
     }
-    
 }
