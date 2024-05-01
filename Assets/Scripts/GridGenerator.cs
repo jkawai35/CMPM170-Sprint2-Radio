@@ -9,10 +9,10 @@ public class GridGenerator : MonoBehaviour
 {
     public Tilemap walkable;
     public GameObject player;
+    public GameObject monster;
     public GameObject end;
 
     [Header("DEBUG")]
-    [SerializeField] bool debugMode = false;
     [SerializeField] Tile highlight;
     [SerializeField] Tile normal;
     
@@ -35,33 +35,19 @@ public class GridGenerator : MonoBehaviour
     void Start(){
         GenerateGrid();
         StartCoroutine(RadioInstruction(5f));
-        
     }
 
     IEnumerator RadioInstruction(float delay){
-        List<Node> currentPath = new List<Node>();
         Pathfinder pathfinder = new Pathfinder();
         while(true){
-            if(debugMode){
-                foreach(Node n in currentPath){
-                    walkable.SetTile(n.pos,normal);
-                }
-            }
-            currentPath.Clear();
-            Node nextNode = nodes[walkable.WorldToCell(player.transform.position)];
+            Node startNode = nodes[walkable.WorldToCell(player.transform.position)];
+            Node nextNode = startNode;
             Node endNode = nodes[walkable.WorldToCell(end.transform.position)];
-            while(nextNode!=endNode){
-                currentPath.Add(nextNode);
+            if(nextNode!=endNode){
                 nextNode = pathfinder.CalculateNextNodeInput(nextNode,endNode);
             }
-            currentPath.Add(nextNode);
 
-            if(debugMode){
-                foreach(Node n in currentPath){
-                    walkable.SetTile(n.pos,highlight);
-                }
-            }
-            Vector3Int direction = currentPath[1].pos-currentPath[0].pos;
+            Vector3Int direction = nextNode.pos-startNode.pos;
             if(direction==Vector3Int.up){
                 Debug.Log("move up");
                 Radio.Instance.RadioDirection(0);
@@ -80,6 +66,20 @@ public class GridGenerator : MonoBehaviour
             }
 
             yield return new WaitForSeconds(delay);
+        }
+    }
+
+    public Vector2 MonsterInstructions(){
+        Pathfinder pathfinder = new Pathfinder();
+        while(true){
+            Node startNode = nodes[walkable.WorldToCell(monster.transform.position)];
+            Node nextNode = startNode;
+            Node endNode = nodes[walkable.WorldToCell(player.transform.position)];
+            if(nextNode!=endNode){
+                nextNode = pathfinder.CalculateNextNodeInput(nextNode,endNode);
+            }
+
+            return walkable.GetCellCenterWorld(nextNode.pos);
         }
     }
 

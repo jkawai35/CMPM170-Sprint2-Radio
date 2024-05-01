@@ -8,6 +8,7 @@ public class Radio : MonoBehaviour
 
     public static Radio _instance;
     public static Radio Instance {get{return _instance;}}
+    AudioSource audioSource;
     private void Awake(){
         if (_instance != null && _instance != this){
             Destroy(this.gameObject);
@@ -15,11 +16,11 @@ public class Radio : MonoBehaviour
         else{
             _instance =  this;
         }
+        audioSource = GetComponent<AudioSource>();
     }
 
     [SerializeField] Image energyBar;
 
-    AudioSource audioSource;
     public float maxEnergy;
     float currentEnergy;
     public float drainSpeed;
@@ -35,7 +36,6 @@ public class Radio : MonoBehaviour
     void Start(){
         currentEnergy = maxEnergy;
         currentState = RadioState.isOn;
-        audioSource = GetComponent<AudioSource>();
     }
 
     void Update(){
