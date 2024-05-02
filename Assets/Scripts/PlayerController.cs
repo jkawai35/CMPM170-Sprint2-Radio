@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
         
         switch(Radio.Instance.currentState){
             case Radio.RadioState.isCharging:
+                rb.velocity = Vector2.zero;
             break;
             case Radio.RadioState.isOn:
                 PlayerMovement();

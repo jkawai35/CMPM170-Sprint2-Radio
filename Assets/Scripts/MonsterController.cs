@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
@@ -10,12 +11,13 @@ public class MonsterController : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] Volume postProc;    
     Rigidbody2D rb;
-
+    AudioSource audioSource;
     bool los;
     
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     Vector2 pathfindingInstruction;
@@ -41,6 +43,13 @@ public class MonsterController : MonoBehaviour
         Vector2 dest = GridGenerator.Instance.MonsterInstructions();
         float monsterDist = Mathf.Clamp01((8-(float)GridGenerator.Instance.monsterPathLength)/8);
         postProc.weight = monsterDist;
+        audioSource.volume = monsterDist;
+        if(monsterDist>0){
+            Radio.Instance.interference = true;
+        }
+        else{
+            Radio.Instance.interference = false;
+        }
         if(los){
             float perc = Mathf.Clamp01((25-Vector2.Distance(playerLoc,monsterLoc))/25);
             Color debugRayColor = Color.Lerp(Color.green,Color.red,perc);
