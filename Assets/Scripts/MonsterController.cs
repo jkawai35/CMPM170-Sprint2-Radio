@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
 
 public class MonsterController : MonoBehaviour
 {
     [SerializeField] float speed;
     [SerializeField] GameObject player;
+    [SerializeField] Volume postProc;    
     Rigidbody2D rb;
 
     bool los;
@@ -36,19 +38,23 @@ public class MonsterController : MonoBehaviour
                 }
             }
         }
-        
+        Vector2 dest = GridGenerator.Instance.MonsterInstructions();
+        float monsterDist = Mathf.Clamp01((8-(float)GridGenerator.Instance.monsterPathLength)/8);
+        postProc.weight = monsterDist;
         if(los){
-            Debug.DrawRay(monsterLoc,playerLoc-monsterLoc,Color.green);
-            MonsterMovement(playerLoc-monsterLoc);
+            float perc = Mathf.Clamp01((25-Vector2.Distance(playerLoc,monsterLoc))/25);
+            Color debugRayColor = Color.Lerp(Color.green,Color.red,perc);
+            Debug.DrawRay(monsterLoc,playerLoc-monsterLoc,debugRayColor);
+            MonsterMovement(playerLoc-monsterLoc,2);
         }
         else{
-            Vector2 dest = GridGenerator.Instance.MonsterInstructions();
-            MonsterMovement(dest-monsterLoc);
+            Debug.DrawRay(monsterLoc,playerLoc-monsterLoc,Color.green);
+            MonsterMovement(dest-monsterLoc,1);
         }
     }
 
-    void MonsterMovement(Vector2 movement){
+    void MonsterMovement(Vector2 movement, float x){
         Vector2 normal = movement.normalized;
-        rb.velocity = new Vector2(normal.x * speed, normal.y * speed);
+        rb.velocity = new Vector2(normal.x * speed, normal.y * speed *x);
     }
 }

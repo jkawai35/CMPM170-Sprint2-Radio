@@ -12,9 +12,9 @@ public class GridGenerator : MonoBehaviour
     public GameObject monster;
     public GameObject end;
 
-    [Header("DEBUG")]
-    [SerializeField] Tile highlight;
-    [SerializeField] Tile normal;
+
+
+    public int monsterPathLength=0;
     
 
     public static GridGenerator _instance;
@@ -78,7 +78,7 @@ public class GridGenerator : MonoBehaviour
             if(nextNode!=endNode){
                 nextNode = pathfinder.CalculateNextNodeInput(nextNode,endNode);
             }
-
+            monsterPathLength = pathfinder.GetPathLength();
             return walkable.GetCellCenterWorld(nextNode.pos);
         }
     }

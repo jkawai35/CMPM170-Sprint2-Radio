@@ -10,6 +10,8 @@ public class Pathfinder
     Node start;
     Node end;
 
+    int pathLength=0;
+
     Dictionary<Node,Node> cameFrom;
 
     public Node CalculateNextNodeInput(Node startNode, Node endNode){
@@ -19,6 +21,10 @@ public class Pathfinder
         Node next = CalculateNextNode();
         //PrintShortestPath();
         return next;
+    }
+
+    public int GetPathLength(){
+        return pathLength;
     }
 
     Node CalculateNextNode(){
@@ -61,7 +67,9 @@ public class Pathfinder
     public Node GetNextNode(){
         Node current = end;
         Node next = end;
+        pathLength = 0;
         while(next!=start){
+            pathLength += 1;
             next = cameFrom[current];
             if(next!=start){
                 current = next;
