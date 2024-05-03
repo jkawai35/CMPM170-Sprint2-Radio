@@ -9,6 +9,7 @@ public class Radio : MonoBehaviour
     public static Radio _instance;
     public static Radio Instance {get{return _instance;}}
     AudioSource audioSource;
+    public bool interference = false;
     private void Awake(){
         if (_instance != null && _instance != this){
             Destroy(this.gameObject);
@@ -60,10 +61,16 @@ public class Radio : MonoBehaviour
     }
 
     public void RadioDirection(int x){
-        switch(currentState){
+        if(!interference){
+            switch(currentState){
             case RadioState.isOn:
                 audioSource.PlayOneShot(soundList[x]);
             break;
+        }
+        }
+        else{
+            int rand = Random.Range(0,3);
+            audioSource.PlayOneShot(soundList[rand]);
         }
     }
 }
