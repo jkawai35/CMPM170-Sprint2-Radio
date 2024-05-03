@@ -48,12 +48,7 @@ public class MonsterController : MonoBehaviour
         float monsterDist = Mathf.Clamp01((8-(float)GridGenerator.Instance.monsterPathLength)/8);
         postProc.weight = monsterDist;
         audioSource.volume = monsterDist;
-        if(monsterDist>0){
-            Radio.Instance.interference = true;
-        }
-        else{
-            Radio.Instance.interference = false;
-        }
+        Radio.Instance.interference = monsterDist;
         if(los){
             float perc = Mathf.Clamp01((25-Vector2.Distance(playerLoc,monsterLoc))/25);
             Color debugRayColor = Color.Lerp(Color.green,Color.red,perc);

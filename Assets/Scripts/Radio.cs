@@ -12,7 +12,7 @@ public class Radio : MonoBehaviour
 
     [SerializeField] Image cooldownImg;
     float cooldown = 0;
-    public bool interference = false;
+    public float interference = 0;
     private void Awake(){
         if (_instance != null && _instance != this){
             Destroy(this.gameObject);
@@ -70,14 +70,13 @@ public class Radio : MonoBehaviour
     public void RadioDirection(int x){
         if(currentEnergy>0){
             cooldown = 0;
-            if(!interference){
+            float rand = Random.Range(0,0.5f);
+            if(rand>=interference){
                 audioSource.PlayOneShot(soundList[x]);
             }
             else{
-                int rand = Random.Range(0,3);
-                audioSource.PlayOneShot(soundList[rand]);
+                audioSource.PlayOneShot(soundList[Random.Range(0,3)]);
             }
-            
         }
     }
 }
