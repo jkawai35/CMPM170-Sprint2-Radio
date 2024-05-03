@@ -13,11 +13,19 @@ public class MonsterController : MonoBehaviour
     Rigidbody2D rb;
     AudioSource audioSource;
     bool los;
+    Animator animator;
+
     
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
+        animator.SetBool("animate", true);
+    }
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
     }
 
     Vector2 pathfindingInstruction;
