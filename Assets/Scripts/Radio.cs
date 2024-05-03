@@ -54,7 +54,7 @@ public class Radio : MonoBehaviour
                 }
             break;
             case RadioState.isCharging:
-                currentEnergy += drainSpeed * 2 * Time.deltaTime;
+                currentEnergy += drainSpeed * 3 * Time.deltaTime;
                 currentEnergy = Mathf.Clamp(currentEnergy,0,maxEnergy);
                 energyBar.color = Color.cyan;
                 energyBar.fillAmount = currentEnergy/maxEnergy;
