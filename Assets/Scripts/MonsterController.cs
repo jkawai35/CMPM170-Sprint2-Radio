@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -13,25 +14,20 @@ public class MonsterController : MonoBehaviour
     Rigidbody2D rb;
     AudioSource audioSource;
     bool los;
-    Animator animator;
+    [SerializeField] GameObject sprite;
 
     
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
-        animator.SetBool("animate", true);
-    }
-
-    private void Awake()
-    {
-        animator = GetComponent<Animator>();
     }
 
     Vector2 pathfindingInstruction;
 
     void Update()
     {
+        sprite.transform.rotation = Quaternion.Euler(Vector3.zero);
         Vector2 playerLoc = new Vector2(player.transform.position.x,player.transform.position.y);
         Vector2 monsterLoc = new Vector2(transform.position.x,transform.position.y);
         RaycastHit2D[] ray = Physics2D.RaycastAll(monsterLoc,playerLoc-monsterLoc,50f);
