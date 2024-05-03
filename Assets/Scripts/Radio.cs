@@ -47,6 +47,7 @@ public class Radio : MonoBehaviour
             case RadioState.isOn:
                 currentEnergy -= drainSpeed * Time.deltaTime;
                 currentEnergy = Mathf.Clamp(currentEnergy,0,maxEnergy);
+                energyBar.color = Color.green;
                 energyBar.fillAmount = currentEnergy/maxEnergy;
                 if(currentEnergy==0){
                     currentState = RadioState.isOff;
@@ -55,6 +56,7 @@ public class Radio : MonoBehaviour
             case RadioState.isCharging:
                 currentEnergy += drainSpeed * 2 * Time.deltaTime;
                 currentEnergy = Mathf.Clamp(currentEnergy,0,maxEnergy);
+                energyBar.color = Color.cyan;
                 energyBar.fillAmount = currentEnergy/maxEnergy;
                 if(currentEnergy==maxEnergy){
                     currentState = RadioState.isOn;
@@ -66,17 +68,16 @@ public class Radio : MonoBehaviour
     }
 
     public void RadioDirection(int x){
-        switch(currentState){
-            case RadioState.isOn:
-                cooldown = 0;
-                if(!interference){
-                    audioSource.PlayOneShot(soundList[x]);
-                }
-                else{
-                    int rand = Random.Range(0,3);
-                    audioSource.PlayOneShot(soundList[rand]);
-                }
-            break;
+        if(currentEnergy>0){
+            cooldown = 0;
+            if(!interference){
+                audioSource.PlayOneShot(soundList[x]);
+            }
+            else{
+                int rand = Random.Range(0,3);
+                audioSource.PlayOneShot(soundList[rand]);
+            }
+            
         }
     }
 }

@@ -10033,7 +10033,7 @@ MonoBehaviour:
   cooldownImg: {fileID: 1697133677}
   interference: 0
   energyBar: {fileID: 1611713126}
-  maxEnergy: 100
+  maxEnergy: 50
   drainSpeed: 2
   soundList:
   - {fileID: 8300000, guid: 4eeae99b2ae087a4b8b4eb6ad2ac4f1b, type: 3}
