@@ -73,11 +73,13 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Monster")) 
         { 
             Debug.Log("End Game - Monster");
+            PlayerPrefs.SetInt("end",0);
             SceneManager.LoadScene("EndScene");
         } 
         if (collision.gameObject.CompareTag("Goal")) 
         { 
             Debug.Log("End Game - Goal");
+            PlayerPrefs.SetInt("end",1);
             SceneManager.LoadScene("EndScene");
         } 
     } 
