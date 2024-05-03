@@ -9,6 +9,9 @@ public class Radio : MonoBehaviour
     public static Radio _instance;
     public static Radio Instance {get{return _instance;}}
     AudioSource audioSource;
+
+    [SerializeField] Image cooldownImg;
+    float cooldown = 0;
     public bool interference = false;
     private void Awake(){
         if (_instance != null && _instance != this){
@@ -58,19 +61,22 @@ public class Radio : MonoBehaviour
                 }
             break;
         }
+        cooldown += 0.2f*Time.deltaTime;
+        cooldownImg.fillAmount = cooldown;
     }
 
     public void RadioDirection(int x){
-        if(!interference){
-            switch(currentState){
+        switch(currentState){
             case RadioState.isOn:
-                audioSource.PlayOneShot(soundList[x]);
+                cooldown = 0;
+                if(!interference){
+                    audioSource.PlayOneShot(soundList[x]);
+                }
+                else{
+                    int rand = Random.Range(0,3);
+                    audioSource.PlayOneShot(soundList[rand]);
+                }
             break;
-        }
-        }
-        else{
-            int rand = Random.Range(0,3);
-            audioSource.PlayOneShot(soundList[rand]);
         }
     }
 }
