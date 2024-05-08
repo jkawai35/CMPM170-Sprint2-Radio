@@ -535,9 +535,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkable: {fileID: 1191217644}
-  player: {fileID: 0}
-  monster: {fileID: 0}
-  end: {fileID: 0}
+  player: {fileID: 1952068542}
+  monster: {fileID: 244528481}
+  end: {fileID: 923567642}
   monsterPathLength: 0
 --- !u!4 &287437532
 Transform:
