@@ -9,6 +9,7 @@ public class DungeonManager : MonoBehaviour
     public Tile[] tileset;
     public Texture2D[] roomTemplates;
     public GameObject doorPrefab;
+    public GameObject player, monster, goal;
 
     private Tilemap walkableTilemap, wallTilemap;
     private DungeonResult dungeonResult;
@@ -24,7 +25,14 @@ public class DungeonManager : MonoBehaviour
                 break;
             }
         }
+        seed = Random.Range(423, 140972);
         dungeonResult = DungeonGenerator.GenerateDungeon(dungeonWidth, dungeonHeight, numRooms, roomTemplates, numNonMSTEdges, seed);
+        Vector2 playerStart = dungeonResult.rooms[Random.Range(0, dungeonResult.rooms.Count)].bounds.center;
+        Vector2 monsterStart = dungeonResult.rooms[Random.Range(0, dungeonResult.rooms.Count)].bounds.center;
+        Vector2 goalStart = dungeonResult.rooms[Random.Range(0, dungeonResult.rooms.Count)].bounds.center;
+        player.transform.position = playerStart - new Vector2(dungeonWidth/2, dungeonHeight/2);
+        monster.transform.position = monsterStart - new Vector2(dungeonWidth/2, dungeonHeight/2);
+        goal.transform.position = goalStart - new Vector2(dungeonWidth/2, dungeonHeight/2);
         ApplyDungeon(dungeonResult);
     }
 
@@ -66,15 +74,15 @@ public class DungeonManager : MonoBehaviour
                 }
             }
         }
-        foreach(Room room in dungeonResult.rooms) {
-            foreach(Door door in room.doors) {
-                Quaternion rotation = Quaternion.identity;
-                if(door.vertical) {
-                    rotation = Quaternion.Euler(0f, 0f, 90f);
-                }
-                Instantiate(doorPrefab, door.position-new Vector2(width/2, height/2), rotation);
-            }
-        }
+        // foreach(Room room in dungeonResult.rooms) {
+        //     foreach(Door door in room.doors) {
+        //         Quaternion rotation = Quaternion.identity;
+        //         if(door.vertical) {
+        //             rotation = Quaternion.Euler(0f, 0f, 90f);
+        //         }
+        //         Instantiate(doorPrefab, door.position-new Vector2(width/2, height/2), rotation);
+        //     }
+        // }
         wallTilemap.SetTiles(wallPositions.ToArray(), wallTiles.ToArray());
         walkableTilemap.SetTiles(walkablePositions.ToArray(), walkableTiles.ToArray());
     }

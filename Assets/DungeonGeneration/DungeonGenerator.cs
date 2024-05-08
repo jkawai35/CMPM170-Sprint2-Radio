@@ -60,6 +60,7 @@ public class DungeonGenerator {
             }
         }
         for(int i = 0; i < numNonMSTEdges; i++) {
+            if(notInMST.Count < 1) break;
             int randI = Random.Range(0, notInMST.Count);
             (int, int) edge = notInMST[randI];
             notInMST.RemoveAt(randI);
