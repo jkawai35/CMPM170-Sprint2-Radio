@@ -164,6 +164,27 @@ public class DungeonGenerator {
                 }
             }
         }
+        for(int y = 0; y < moveCosts.GetLength(1); y++) {
+            for(int x = 0; x < moveCosts.GetLength(0); x++) {
+                if(dungeonTiles[x, y] == DOORWAY_ID) {
+                    bool foundAVoid = false;
+                    for(int j = -1; j <= 1; j++) {
+                        if(foundAVoid) break;
+                        for(int i = -1; i <= 1; i++) {
+                            int f = x+i;
+                            int g = y+j;
+                            if(f >= 0 && f <= dungeonTiles.GetLength(0) && g >= 0 && g <= dungeonTiles.GetLength(1)) {
+                                if(dungeonTiles[f, g] == VOID_ID) {
+                                    dungeonTiles[x, y] = WALL_ID;
+                                    foundAVoid = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         return connections;
     }
