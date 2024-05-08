@@ -27,9 +27,25 @@ public class DungeonManager : MonoBehaviour
         }
         seed = Random.Range(423, 140972);
         dungeonResult = DungeonGenerator.GenerateDungeon(dungeonWidth, dungeonHeight, numRooms, roomTemplates, numNonMSTEdges, seed);
-        Vector2 playerStart = dungeonResult.rooms[Random.Range(0, dungeonResult.rooms.Count)].bounds.center;
-        Vector2 monsterStart = dungeonResult.rooms[Random.Range(0, dungeonResult.rooms.Count)].bounds.center;
-        Vector2 goalStart = dungeonResult.rooms[Random.Range(0, dungeonResult.rooms.Count)].bounds.center;
+        int[] randomNumbers = {Random.Range(0, dungeonResult.rooms.Count), -1, -1};
+        for(int i = 1; i < 3; i++) {
+            int newRandom = Random.Range(0, dungeonResult.rooms.Count);
+            bool valid = true;
+            for(int j = 0; j < i; j++) {
+                if(randomNumbers[i] == newRandom) {
+                    valid = false;
+                    break;
+                }
+            }
+            if(valid) {
+                randomNumbers[i] = newRandom;
+            } else {
+                i++;
+            }
+        }
+         Vector2 playerStart = dungeonResult.rooms[randomNumbers[0]].bounds.center;
+        Vector2 monsterStart = dungeonResult.rooms[randomNumbers[1]].bounds.center;
+        Vector2 goalStart = dungeonResult.rooms[randomNumbers[2]].bounds.center;
         player.transform.position = playerStart - new Vector2(dungeonWidth/2, dungeonHeight/2);
         monster.transform.position = monsterStart - new Vector2(dungeonWidth/2, dungeonHeight/2);
         goal.transform.position = goalStart - new Vector2(dungeonWidth/2, dungeonHeight/2);
